@@ -1,0 +1,30 @@
+{
+  "name": "@cfn/graph",
+  "version": "0.0.0",
+  "description": "Produce a list of the Resources in a CloudFormation Template sorted based on dependency",
+  "main": "cfn-graph.js",
+  "scripts": {
+    "test": "nyc --all ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/node-cfn/graph.git"
+  },
+  "keywords": [
+    "cloudformation",
+    "aws"
+  ],
+  "author": "Doug Moscrop <doug.moscrop@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/node-cfn/graph/issues"
+  },
+  "homepage": "https://github.com/node-cfn/graph#readme",
+  "devDependencies": {
+    "ava": "^1.0.1",
+    "nyc": "^13.1.0"
+  },
+  "dependencies": {
+    "toposort": "^2.0.2"
+  }
+}
