@@ -5,11 +5,23 @@ const toposort = require('toposort');
 const getReferences = require('./get-references');
 
 module.exports = function graph({ template }) {
-    const { Resources = {} } = template;
+    const { Conditions = {}, Resources = {} } = template;
 
-    const resources = Object.keys(Resources).reduce((memo, logicalId) => {
-        const resource = Resources[logicalId];
-        const references = getReferences(resource);
+    const conditions = Object.entries(Conditions).reduce((memo, [logicalId, condition]) => {
+        memo[logicalId] = getReferences(condition);
+
+        return memo;
+    }, {});
+
+    const resources = Object.entries(Resources).reduce((memo, [logicalId, resource]) => {
+        const { DependsOn = [], Condition, Properties = {} } = resource;
+  
+        const references = getReferences(Properties).concat(DependsOn);
+        const conditionReferences = conditions[Condition];
+
+        if (conditionReferences) {
+            references.push(...conditionReferences);
+        }
 
         memo[logicalId] = { logicalId, resource, references };
 
